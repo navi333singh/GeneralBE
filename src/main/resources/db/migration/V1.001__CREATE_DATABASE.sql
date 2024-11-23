@@ -6,4 +6,3 @@ CREATE TABLE IF NOT EXISTS one_password (
         Description varchar(255),
         Last_modified varchar(255)
 );
-
