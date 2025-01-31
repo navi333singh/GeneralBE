@@ -6,4 +6,3 @@ create table if not exists folder
     type          varchar(255) null,
     parent_id     INTEGER DEFAULT 0
 );
-
