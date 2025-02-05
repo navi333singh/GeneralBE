@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/generalbe/OnePassword")
+@RequestMapping("/generalbe/OnePassworsd")
 public class OnePasswordController {
 
     private final OnePasswordOrchestration listOrchestration;
@@ -25,16 +25,16 @@ public class OnePasswordController {
     method = RequestMethod.GET)
     public Mono<ResponseEntity<OnePasswordResponse>> allPasswords() {
         OnePasswordResponse resp = listOrchestration.getAllPassword();
-        return Mono.just(ResponseEntity.ok().body(resp)).doOnSuccess(result -> log.info("successfully get column"));
+        return Mono.just(ResponseEntity.ok().body(resp));
     }
 
     @RequestMapping(
             value = "/{id}",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    public Mono<ResponseEntity<OnePasswordResponse>> getPassword(@PathVariable int id) {
+    public ResponseEntity<OnePasswordResponse> getPassword(@PathVariable int id) {
         OnePasswordResponse resp = listOrchestration.getPasswordByID(id);
-        return Mono.just(ResponseEntity.ok().body(resp)).doOnSuccess(result -> log.info("successfully get column"));
+        return ResponseEntity.ok().body(resp);
     }
 
     @RequestMapping(

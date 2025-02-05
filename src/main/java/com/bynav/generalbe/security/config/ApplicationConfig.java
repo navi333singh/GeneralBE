@@ -1,6 +1,7 @@
 package com.bynav.generalbe.security.config;
 
 
+import com.bynav.generalbe.security.auditing.ApplicationAuditAware;
 import com.bynav.generalbe.security.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -35,10 +36,10 @@ public class ApplicationConfig {
         return authProvider;
     }
 
-   /* @Bean
-    public AuditorAware<Integer> auditorAware() {
+    @Bean
+    public AuditorAware<String> auditorAware() {
         return new ApplicationAuditAware();
-    }*/
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
