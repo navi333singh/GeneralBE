@@ -49,7 +49,7 @@ public class AuthenticationService {
            throw GeneralErrorEnum.USER_ALREADY_PRESENT.buildGeneralException();
        }
         var savedUser = repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtService.generateToken(user, savedUser.getUserId());
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUser, jwtToken);
         return AuthenticationResponse.builder()
@@ -69,7 +69,7 @@ public class AuthenticationService {
             );
             var user = repository.findByUsername(request.getUsername())
                     .orElseThrow();
-            var jwtToken = jwtService.generateToken(user);
+            var jwtToken = jwtService.generateToken(user, user.getUserId());
             var refreshToken = jwtService.generateRefreshToken(user);
             revokeAllUserTokens(user);
             saveUserToken(user, jwtToken);
@@ -120,7 +120,7 @@ public class AuthenticationService {
             var user = this.repository.findByUsername(username)
                     .orElseThrow();
             if (jwtService.isTokenValid(refreshToken, user)) {
-                var accessToken = jwtService.generateToken(user);
+                var accessToken = jwtService.generateToken(user, user.getUserId());
                 revokeAllUserTokens(user);
                 saveUserToken(user, accessToken);
                 var authResponse = AuthenticationResponse.builder()
